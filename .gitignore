@@ -1,1 +1,2 @@
-ProtfolioWebsite/main/model/*.pkl
+*.pkl
+ProtfolioWebsite/main/model/
