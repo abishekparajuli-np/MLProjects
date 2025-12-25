@@ -1,3 +1,4 @@
+
 {% extends "layout.html" %}
 {% block content %}
 <div class="movie-recommendation">
@@ -9,6 +10,10 @@
     </div>
     <button type="submit">Get Recommendations</button>
 </form>
+{% if error %}
+    <p class="error-message">{{ error }}</p>
+{% endif %}
+
     {% if recommendations %}
     <h2>Recommended Movies:</h2>
     <div class="recommendations-container">

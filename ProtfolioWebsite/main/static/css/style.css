@@ -393,3 +393,9 @@ main {
 .movie-recommendation input[type="text"] + #suggestions {
     margin-top: -2px; /* Adjust spacing to remove line */
 }
+.error-message {
+    color: #b00020;
+    font-weight: 600;
+    margin-top: 20px;
+    text-align: center;
+}
