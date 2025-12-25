@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="project-detail">
+    <h1>Movie Recommendation Model</h1>
+    <form method="post" action="/movie-recommendation">
+        <label for="movie_name">Enter a Movie Name:</label>
+        <input type="text" id="movie_name" name="movie_name" required>
+        <button type="submit">Get Recommendations</button>
+    </form>
+    {% if recommendations %}
+    <h2>Recommended Movies:</h2>
+    <ul>
+        {% for movie in recommendations %}
+        <li>{{ movie }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</div>
+{% endblock %}

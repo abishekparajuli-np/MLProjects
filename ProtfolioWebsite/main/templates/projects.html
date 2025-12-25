@@ -1,7 +1,10 @@
 {% extends "layout.html" %}
 {% block content %}
-<div class="placeholder">
+<div class="projects-list">
     <h1>Projects</h1>
-    <p>Under Construction</p>
+    <ul>
+        <li><a href="{{url_for('movie_recommendation')}}">Movie Recommendation Model</a></li>
+        <li><a href="#">Other Projects (Coming Soon!)</a></li>
+    </ul>
 </div>
 {% endblock %}
