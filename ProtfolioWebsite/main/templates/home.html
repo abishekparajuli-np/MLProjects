@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="hero">
+    <div class="hero-text">
+        <h1>Hi,</h1>
+        <h1>I’m <span class="highlight">Abishek</span></h1>
+        <h2>A Passionate Developer</h2>
+        <a href="{{url_for('contact')}}" class="contact-button">Contact Me</a>
+    </div>
+    <div class="hero-image">
+        <img src="{{ url_for('static', filename='pics/HomePage.jpg') }}" 
+             alt="Profile Picture" 
+             class="profile-picture">
+    </div>
+</div>
+{% endblock %}
