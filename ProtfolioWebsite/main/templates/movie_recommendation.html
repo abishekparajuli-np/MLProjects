@@ -1,19 +1,52 @@
 {% extends "layout.html" %}
 {% block content %}
-<div class="project-detail">
-    <h1>Movie Recommendation Model</h1>
-    <form method="post" action="/movie-recommendation">
-        <label for="movie_name">Enter a Movie Name:</label>
-        <input type="text" id="movie_name" name="movie_name" required>
-        <button type="submit">Get Recommendations</button>
-    </form>
+<div class="movie-recommendation">
+    <h1>Movie Recommendation System</h1>
+<form method="post" action="/movie-recommendation">
+    <div class="autocomplete">
+        <input type="text" id="movie_name" name="movie_name" placeholder="Enter a movie name" required>
+        <ul id="suggestions"></ul> <!-- Dropdown for suggestions -->
+    </div>
+    <button type="submit">Get Recommendations</button>
+</form>
     {% if recommendations %}
     <h2>Recommended Movies:</h2>
-    <ul>
-        {% for movie in recommendations %}
-        <li>{{ movie }}</li>
+    <div class="recommendations-container">
+        {% for recommendation in recommendations %}
+        <div class="recommendation-card">
+            <img src="{{ recommendation.poster }}" alt="{{ recommendation.title }}" class="recommendation-poster">
+            <p class="recommendation-title">{{ recommendation.title }}</p>
+        </div>
         {% endfor %}
-    </ul>
+    </div>
     {% endif %}
 </div>
+
+<!-- JavaScript for Movie Search -->
+<script>
+    const inputField = document.getElementById("movie_name");
+    const suggestionsList = document.getElementById("suggestions");
+
+    inputField.addEventListener("input", async () => {
+        const query = inputField.value;
+        if (query.length < 1) {
+            suggestionsList.innerHTML = ""; // Clear suggestions if query is empty
+            return;
+        }
+
+        // Fetch movie suggestions from the server
+        const response = await fetch(`/search?query=${query}`);
+        const movies = await response.json();
+
+        // Update suggestions list
+        suggestionsList.innerHTML = movies.map(movie => `
+            <li onclick="selectMovie('${movie}')">${movie}</li>
+        `).join("");
+    });
+
+    function selectMovie(movie) {
+        inputField.value = movie; // Update the input field with the selected movie
+        suggestionsList.innerHTML = ""; // Clear the suggestions
+    }
+</script>
 {% endblock %}

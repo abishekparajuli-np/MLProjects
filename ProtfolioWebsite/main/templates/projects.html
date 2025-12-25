@@ -1,10 +1,29 @@
 {% extends "layout.html" %}
 {% block content %}
-<div class="projects-list">
-    <h1>Projects</h1>
-    <ul>
-        <li><a href="{{url_for('movie_recommendation')}}">Movie Recommendation Model</a></li>
-        <li><a href="#">Other Projects (Coming Soon!)</a></li>
-    </ul>
+<div class="projects-section">
+    <h1>My Projects</h1>
+    <div class="projects-container">
+        <!-- Project 1 -->
+        <div class="project-card">
+            <img src="{{ url_for('static', filename='pics/temp.jpg') }}" alt="Project 1 Image" class="project-image">
+            <h2>Movie Recommendation System</h2>
+            <p>A system to recommend movies based on user preferences using machine learning models.</p>
+            <div class="project-buttons">
+                <a href="https://github.com/abishekparajuli-np/MLProjects" target="_blank" class="button source-code">Source Code</a>
+                <a href="/movie-recommendation" class="button live-demo">Live Demo</a>
+            </div>
+        </div>
+        
+        <!-- Project 2 -->
+        <div class="project-card">
+            <img src="{{ url_for('static', filename='pics/temp2.jpg') }}" alt="Project 2 Image" class="project-image">
+            <h2>Another Project</h2>
+            <p>Details about another project will be added here.</p>
+            <div class="project-buttons">
+                <a href="#" class="button source-code">Source Code</a>
+                <a href="#" class="button live-demo">Live Demo</a>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

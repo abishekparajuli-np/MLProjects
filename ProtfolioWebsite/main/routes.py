@@ -1,7 +1,7 @@
 
-from flask import render_template,url_for,flash,redirect,request,abort
+from flask import render_template,url_for,flash,redirect,request,abort,jsonify
 from main import app
-from main.movie_recommendation import get_recommendations,load_model
+from main.movie_recommendation import get_recommendations,MOVIES
 @app.route("/")
 @app.route("/home")
 def home():
@@ -17,15 +17,33 @@ def projects():
 
 @app.route("/movie-recommendation", methods=["GET", "POST"])
 def movie_recommendation():
-    recommendations = None
+    recommendations = []
+
     if request.method == "POST":
         movie_name = request.form.get("movie_name")
-        recommendations = get_recommendations(movie_name)
+        result = get_recommendations(movie_name)
+
+        # Handle errors and recommendations
+        if "error" in result:
+            recommendations = [{"title": result["error"], "poster": "https://via.placeholder.com/500x750?text=No+Poster"}]
+        else:
+            recommendations = result["recommendations"]
+
     return render_template(
-        "movie_recommendation.html", 
-        recommendations=recommendations, 
-        title="Movie Recommendation"
+        "movie_recommendation.html",
+        recommendations=recommendations,
+        title="Movie Recommendation",
     )
+@app.route("/search", methods=["GET"])
+def search():
+    query = request.args.get("query", "").strip().lower()
+    if not query:
+        return jsonify([])  # Return empty list for blank queries
+
+    # Filter movies based on query
+    matching_movies = MOVIES[MOVIES['title'].str.lower().str.contains(query, na=False)]
+    suggestions = matching_movies['title'].head(10).tolist()  # Return top 10 matches
+    return jsonify(suggestions)
 
 @app.route("/gallery")
 def gallery():
